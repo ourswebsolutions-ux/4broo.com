@@ -1,0 +1,1098 @@
+{
+  "brand": {
+    "tagline": "Create Your Legacy"
+  },
+  "nav": {
+    "men": "Men",
+    "women": "Women",
+    "kids": "Kids",
+    "accessories": "Accessories",
+    "newArrivals": "New Arrivals",
+    "sale": "Sale",
+    "search": "Search",
+    "account": "Account",
+    "wishlist": "Wishlist",
+    "cart": "Shopping bag",
+    "menu": "Menu",
+    "shop": "Shop",
+    "openMenu": "Open menu",
+    "allOf": "All {name}",
+    "whatsapp": "Chat on WhatsApp",
+    "watches": "Watches",
+    "perfumes": "Perfumes",
+    "handbags": "Hand Bags",
+    "bags": "Bags",
+    "language": "Language"
+  },
+  "common": {
+    "shopNow": "Shop now",
+    "viewAll": "View all",
+    "addToBag": "Add to bag",
+    "soldOut": "Sold out",
+    "lowStock": "Low stock",
+    "inStock": "In stock",
+    "new": "New",
+    "bestSeller": "Best seller",
+    "close": "Close",
+    "loading": "Loading",
+    "tryAgain": "Try again",
+    "skipToContent": "Skip to content"
+  },
+  "currency": {
+    "label": "Currency",
+    "PKR": "Pakistani Rupee",
+    "USD": "US Dollar",
+    "approxNote": "Prices are charged in PKR. USD amounts are approximate.",
+    "switcher": "Display currency"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "label": "Breadcrumb"
+  },
+  "product": {
+    "quickView": "Quick view",
+    "viewDetails": "View details",
+    "badge": {
+      "new": "New",
+      "bestSeller": "Best seller",
+      "sale": "Sale",
+      "soldOut": "Sold out",
+      "featured": "Featured"
+    },
+    "lowStock": "Low stock",
+    "onlyLeft": "Only {count} left",
+    "inStock": "In stock",
+    "currentlySoldOut": "Currently sold out",
+    "salePrice": "Sale price",
+    "originalPrice": "Original price",
+    "approx": "≈ {amount}",
+    "size": "Size",
+    "color": "Colour",
+    "sku": "SKU",
+    "material": "Material",
+    "category": "Category",
+    "description": "Description",
+    "details": "Details",
+    "selectSize": "Select a size",
+    "selectColor": "Select a colour",
+    "selectOptions": "Select options to see availability",
+    "unavailable": "Unavailable",
+    "addToBag": "Add to bag",
+    "orderingSoon": "Online ordering opens soon.",
+    "askWhatsapp": "Ask on WhatsApp",
+    "whatsappMessage": "Hello 4 BRO, I'm interested in the {name}.",
+    "addFavorite": "Add {name} to favourites",
+    "removeFavorite": "Remove {name} from favourites",
+    "chargedInPkr": "Prices are charged in PKR. USD amounts are approximate.",
+    "related": "You may also like",
+    "relatedMore": "More from {category}"
+  },
+  "gallery": {
+    "previous": "Previous image",
+    "next": "Next image",
+    "imageOf": "Image {current} of {total}",
+    "goTo": "Show image {index}",
+    "open": "Open image viewer",
+    "close": "Close",
+    "viewer": "Image viewer",
+    "noImage": "Image coming soon"
+  },
+  "collection": {
+    "pieces": "{count} pieces",
+    "piece": "{count} piece",
+    "arrivingSoon": "Arriving soon",
+    "arrivingSoonText": "This edit is being prepared. Explore the latest arrivals in the meantime.",
+    "shopNewArrivals": "Shop new arrivals",
+    "all": "All",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "pageOf": "Page {page} of {total}",
+    "pagination": "Pagination"
+  },
+  "search": {
+    "title": "Search",
+    "label": "Search products",
+    "placeholder": "Search 4 BRO",
+    "clear": "Clear",
+    "recent": "Recent searches",
+    "clearAll": "Clear all",
+    "recentEmpty": "Your recent searches will appear here.",
+    "explore": "Explore",
+    "results": "{count} results",
+    "result": "{count} result",
+    "viewAll": "View all",
+    "noResults": "No results for “{query}”",
+    "noResultsHint": "Check the spelling or try a broader term — or explore a department.",
+    "unavailable": "Search is unavailable",
+    "unavailableHint": "We could not load results. Please try again.",
+    "prompt": "What are you looking for?",
+    "promptHint": "Search by product name, category or department.",
+    "findPiece": "Find a piece",
+    "resultsFor": "Results for “{query}”",
+    "categories": "Categories",
+    "products": "Products",
+    "refine": "Refine results"
+  },
+  "filters": {
+    "title": "Filters",
+    "category": "Category",
+    "gender": "Gender",
+    "size": "Size",
+    "color": "Colour",
+    "price": "Price",
+    "min": "Min",
+    "max": "Max",
+    "material": "Material",
+    "availability": "Availability",
+    "inStock": "In stock only",
+    "highlights": "Highlights",
+    "onSale": "On sale",
+    "newArrival": "New arrivals",
+    "bestSeller": "Best sellers",
+    "featured": "Featured",
+    "clearAll": "Clear all",
+    "showResults": "Show {count} results",
+    "showResult": "Show {count} result",
+    "active": "Active filters",
+    "remove": "Remove filter: {label}",
+    "noResults": "No pieces match these filters",
+    "noResultsHint": "Try removing a filter or widening the price range.",
+    "selected": "{count} selected",
+    "updating": "Updating results…",
+    "priceRange": "Price range ({currency})",
+    "from": "From",
+    "to": "To",
+    "genders": {
+      "men": "Men",
+      "women": "Women",
+      "kids": "Kids",
+      "unisex": "Unisex"
+    },
+    "open": "Open filters",
+    "applyPrice": "Apply price",
+    "apply": "Apply filters"
+  },
+  "sort": {
+    "label": "Sort by",
+    "featured": "Featured",
+    "newest": "Newest",
+    "bestSelling": "Best selling",
+    "priceAsc": "Price: low to high",
+    "priceDesc": "Price: high to low",
+    "name": "Name: A–Z"
+  },
+  "collectionCopy": {
+    "men": {
+      "title": "Men",
+      "eyebrow": "Department",
+      "description": "Tailoring, outerwear and considered essentials for every day."
+    },
+    "women": {
+      "title": "Women",
+      "eyebrow": "Department",
+      "description": "Sharp tailoring, fluid trousers and pieces that move with you."
+    },
+    "kids": {
+      "title": "Kids",
+      "eyebrow": "Department",
+      "description": "Smart, comfortable pieces for the next generation."
+    },
+    "accessories": {
+      "title": "Accessories",
+      "eyebrow": "Department",
+      "description": "Watches, perfumes, hand bags and bags to complete the look."
+    },
+    "watches": {
+      "title": "Watches",
+      "eyebrow": "Accessories",
+      "description": "Timepieces chosen for character and everyday wear."
+    },
+    "perfumes": {
+      "title": "Perfumes",
+      "eyebrow": "Accessories",
+      "description": "Fragrances with warmth and presence."
+    },
+    "handbags": {
+      "title": "Hand Bags",
+      "eyebrow": "Accessories",
+      "description": "Structured and soft hand bags in fine leather."
+    },
+    "bags": {
+      "title": "Bags",
+      "eyebrow": "Accessories",
+      "description": "Holdalls, satchels and carry-alls built for movement."
+    },
+    "new-arrivals": {
+      "title": "New Arrivals",
+      "eyebrow": "Just in",
+      "description": "The latest pieces across every department."
+    },
+    "best-sellers": {
+      "title": "Best Sellers",
+      "eyebrow": "Most wanted",
+      "description": "The pieces customers return to most."
+    },
+    "sale": {
+      "title": "Sale",
+      "eyebrow": "Selected pieces",
+      "description": "A considered selection at reduced prices."
+    },
+    "featured": {
+      "title": "Featured",
+      "eyebrow": "Curated",
+      "description": "Pieces our team is wearing and recommending right now."
+    }
+  },
+  "announcement": {
+    "message": "New season — Men, Women, Kids & Accessories"
+  },
+  "header": {
+    "language": "Language",
+    "currency": "Currency",
+    "changeLanguage": "Change language — current: {name}",
+    "changeCurrency": "Change currency — current: {name}",
+    "currencyNames": {
+      "PKR": "Pakistani Rupee",
+      "USD": "US Dollar"
+    },
+    "usdNote": "USD is an estimate. Orders are charged in PKR.",
+    "bag": "Shopping bag",
+    "bagCount": "Shopping bag, {count} items",
+    "signIn": "Sign in",
+    "accountOf": "Account — {name}"
+  },
+  "commonActions": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleting": "Deleting",
+    "optional": "Optional",
+    "back": "Back",
+    "confirm": "Confirm"
+  },
+  "auth": {
+    "welcomeBack": "Welcome back",
+    "signIn": "Sign in",
+    "signingIn": "Signing in",
+    "newHere": "New to 4 BRO?",
+    "createAccount": "Create an account",
+    "join": "Join 4 BRO",
+    "createTitle": "Create account",
+    "creating": "Creating account",
+    "haveAccount": "Already have an account?",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "passwordHint": "At least 10 characters, including a letter and a number.",
+    "forgotPassword": "Forgot password?",
+    "forgotTitle": "Reset your password",
+    "forgotIntro": "Enter the email address on your account and we will send you a link to choose a new password.",
+    "sendLink": "Send reset link",
+    "sending": "Sending",
+    "resetSent": "If an account exists for that email, we have sent a link to reset your password. The link expires in 1 hour.",
+    "backToSignIn": "Back to sign in",
+    "resetTitle": "Choose a new password",
+    "resetIntro": "Choose a strong password you do not use anywhere else.",
+    "newPassword": "New password",
+    "savePassword": "Save new password",
+    "resetDone": "Your password has been changed. Please sign in with your new password.",
+    "resetInvalid": "This reset link is invalid or has expired.",
+    "requestNew": "Request a new link",
+    "invalidCredentials": "Incorrect email or password.",
+    "emailTaken": "An account with this email already exists.",
+    "benefits": "Save favourites, keep your bag across devices and check out faster.",
+    "promptFavoriteTitle": "Sign in to save favourites",
+    "promptFavoriteText": "Sign in or create an account and we will add this piece to your wishlist.",
+    "promptCartTitle": "Sign in to add to your bag",
+    "promptCartText": "Your bag is saved to your account. Sign in or create an account and we will add this piece for you.",
+    "resumed": "Welcome — we have completed your last action."
+  },
+  "validation": {
+    "required": "This field is required.",
+    "email": "Enter a valid email address.",
+    "name": "Enter a name between 1 and 80 characters.",
+    "phone": "Enter a valid phone number, e.g. +92 300 1234567.",
+    "password": "Use at least 10 characters, including a letter and a number.",
+    "passwordMatch": "Passwords do not match.",
+    "currentPassword": "Your current password is incorrect.",
+    "fullName": "Enter the recipient's full name.",
+    "addressLine": "Enter a street address (at least 5 characters).",
+    "city": "Enter a city.",
+    "postalCode": "Postal code is too long.",
+    "country": "Enter a country.",
+    "label": "Use 40 characters or fewer.",
+    "invalid": "Please check this field.",
+    "form": "Please check the highlighted fields.",
+    "addressChoice": "Choose a delivery address.",
+    "paymentMethod": "Choose an available payment method."
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "signIn": "Please sign in to continue.",
+    "customerOnly": "Shopping is available with a customer account.",
+    "unavailable": "This item is no longer available.",
+    "soldOut": "This item is sold out.",
+    "onlyLeft": "Only {count} left in stock.",
+    "notFound": "This item could not be found.",
+    "rateLimited": "Too many attempts. Please wait a moment and try again.",
+    "service": "This service is temporarily unavailable. Please try again shortly.",
+    "selectVariant": "Please select a size and colour first.",
+    "maxQuantity": "You can add up to {count} of this item.",
+    "stockChanged": "Some items in your bag are no longer available in the requested quantity. Please review your bag.",
+    "cartEmpty": "Your bag is empty.",
+    "orderNotFound": "Order not found."
+  },
+  "cart": {
+    "title": "Shopping Bag",
+    "eyebrow": "Your selection",
+    "drawerTitle": "Your bag",
+    "empty": "Your bag is empty",
+    "emptyText": "Pieces you add will appear here.",
+    "continue": "Continue shopping",
+    "viewCart": "View bag",
+    "checkout": "Checkout",
+    "summary": "Order summary",
+    "subtotal": "Subtotal",
+    "savings": "You save",
+    "delivery": "Delivery",
+    "deliveryAtCheckout": "Calculated at checkout",
+    "estimatedTotal": "Estimated total",
+    "chargedNote": "All orders are charged in Pakistani Rupees (PKR).",
+    "quantity": "Quantity",
+    "quantityOf": "Quantity for {name}",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity",
+    "remove": "Remove",
+    "removeItem": "Remove {name} from bag",
+    "saveForLater": "Save for later",
+    "added": "Added to your bag",
+    "removed": "Removed from your bag",
+    "movedToSaved": "Saved for later",
+    "updated": "Bag updated",
+    "price": "Price",
+    "total": "Total",
+    "items": "{count} items",
+    "item": "{count} item",
+    "unavailable": "No longer available — remove it to continue.",
+    "reduceQuantity": "Only {count} available. Please reduce the quantity.",
+    "signInTitle": "Sign in to see your bag",
+    "signInText": "Your bag is saved to your account so it is there on every device.",
+    "loadError": "We could not load your bag. Please refresh the page."
+  },
+  "saved": {
+    "title": "Saved for later",
+    "eyebrow": "Not right now",
+    "empty": "Nothing saved for later",
+    "emptyText": "Move pieces out of your bag with “Save for later” and they will wait here.",
+    "moveToCart": "Move to bag",
+    "movedToCart": "Moved to your bag",
+    "removed": "Removed from saved items",
+    "remove": "Remove",
+    "count": "{count} saved"
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "eyebrow": "Your favourites",
+    "empty": "Your wishlist is empty",
+    "emptyText": "Tap the heart on any piece to keep it here.",
+    "discover": "Discover new arrivals",
+    "added": "Added to your wishlist",
+    "removed": "Removed from your wishlist",
+    "addToBag": "Add to bag",
+    "chooseOptions": "Choose size & colour",
+    "remove": "Remove",
+    "signInTitle": "Sign in to see your wishlist",
+    "signInText": "Favourites are saved to your account, so you can find them on any device.",
+    "count": "{count} pieces"
+  },
+  "account": {
+    "title": "My account",
+    "welcome": "Welcome, {name}",
+    "navLabel": "Account",
+    "overview": "Overview",
+    "profile": "Profile",
+    "addresses": "Addresses",
+    "orders": "Orders",
+    "wishlist": "Wishlist",
+    "saved": "Saved for later",
+    "cart": "Shopping bag",
+    "signOut": "Sign out",
+    "signingOut": "Signing out",
+    "details": "Account details",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "notSet": "Not added",
+    "memberSince": "Member since {date}",
+    "favourites": "Favourites",
+    "inBag": "In your bag",
+    "defaultAddress": "Default address",
+    "noAddress": "No address saved yet",
+    "manage": "Manage",
+    "recent": "Recent orders",
+    "noOrders": "No orders yet",
+    "noOrdersText": "When you place an order it will appear here with its status.",
+    "orderNumber": "Order",
+    "orderDate": "Date",
+    "orderStatus": "Status",
+    "orderTotal": "Total",
+    "orderStatuses": {
+      "NEW": "Received",
+      "CONFIRMED": "Confirmed",
+      "PROCESSING": "Processing",
+      "PACKED": "Packed",
+      "SHIPPED": "Shipped",
+      "DELIVERED": "Delivered",
+      "CANCELLED": "Cancelled"
+    },
+    "profileIntro": "Keep your details up to date for faster delivery.",
+    "saveChanges": "Save changes",
+    "profileSaved": "Your details have been saved.",
+    "emailLocked": "Contact us to change the email address on your account.",
+    "security": "Security",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "passwordChanged": "Password updated. Your other devices have been signed out."
+  },
+  "address": {
+    "title": "Addresses",
+    "intro": "Saved addresses make checkout faster.",
+    "add": "Add address",
+    "edit": "Edit address",
+    "new": "New address",
+    "label": "Label",
+    "labelHint": "For example Home or Office",
+    "fullName": "Full name",
+    "phone": "Phone",
+    "addressLine": "Address",
+    "addressHint": "House, street, area",
+    "city": "City",
+    "postalCode": "Postal code",
+    "country": "Country",
+    "default": "Default",
+    "makeDefault": "Set as default",
+    "useAsDefault": "Use as my default address",
+    "save": "Save address",
+    "delete": "Delete",
+    "deleteTitle": "Delete this address?",
+    "deleteText": "This cannot be undone.",
+    "empty": "No saved addresses",
+    "emptyText": "Add an address now and it will be ready at checkout.",
+    "saved": "Address saved",
+    "deleted": "Address deleted",
+    "defaultSet": "Default address updated",
+    "limit": "You can save up to {count} addresses."
+  },
+  "emails": {
+    "resetSubject": "Reset your 4 BRO password",
+    "greeting": "Hello {name},",
+    "resetIntro": "We received a request to reset the password for your 4 BRO account. Use the link below within 1 hour to choose a new password.",
+    "resetButton": "RESET PASSWORD",
+    "resetIgnore": "If you did not ask for this, you can ignore this email — your password will not change."
+  },
+  "footer": {
+    "about": "Premium fashion and lifestyle for men, women and kids — with accessories to complete every look.",
+    "contact": "Contact",
+    "contactUs": "Contact us",
+    "social": "Social media",
+    "socialOn": "{brand} on {network}",
+    "rights": "© {year} {brand}. All rights reserved.",
+    "columns": {
+      "shop": "Shop",
+      "customer": "Customer",
+      "help": "Help",
+      "company": "Company"
+    },
+    "links": {
+      "men": "Men",
+      "women": "Women",
+      "kids": "Kids",
+      "accessories": "Accessories",
+      "newArrivals": "New Arrivals",
+      "sale": "Sale",
+      "myAccount": "My Account",
+      "orders": "Orders",
+      "wishlist": "Wishlist",
+      "cart": "Shopping Bag",
+      "trackOrder": "Track Order",
+      "contact": "Contact",
+      "shipping": "Shipping",
+      "returns": "Returns",
+      "exchange": "Exchange",
+      "sizeGuide": "Size Guide",
+      "faqs": "FAQs",
+      "about": "About 4 BRO",
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions"
+    }
+  },
+  "checkout": {
+    "title": "Checkout",
+    "secure": "Secure checkout",
+    "backToBag": "Back to bag",
+    "contact": "Contact",
+    "contactIntro": "We use these details to confirm and deliver your order.",
+    "fullName": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "phoneHint": "Include the country code, e.g. +92 300 1234567",
+    "whatsapp": "WhatsApp number",
+    "whatsappSame": "My WhatsApp number is the same as my phone",
+    "whatsappHint": "For delivery updates",
+    "delivery": "Delivery address",
+    "savedAddresses": "Saved addresses",
+    "newAddress": "Deliver to a new address",
+    "saveAddress": "Save this address to my account",
+    "addressLine": "Address",
+    "addressHint": "House, street, area",
+    "city": "City",
+    "postalCode": "Postal code",
+    "country": "Country",
+    "shipping": "Delivery",
+    "standard": "Standard delivery",
+    "free": "Free",
+    "tbc": "To be confirmed",
+    "tbcText": "Our team will confirm the delivery fee for your address according to our shipping policy before dispatch.",
+    "payment": "Payment",
+    "cod": "Cash on delivery",
+    "codText": "Pay in cash when your order arrives.",
+    "paynow": "PayNow",
+    "paynowText": "Pay securely online.",
+    "unavailable": "Online payment is not available yet.",
+    "note": "Order note",
+    "noteHint": "Optional — delivery instructions or a message for our team",
+    "review": "Review",
+    "placeOrder": "Place order",
+    "placing": "Placing your order",
+    "agreement": "By placing your order you agree to our {terms} and {privacy}.",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "summary": "Order summary",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery",
+    "total": "Total",
+    "chargedIn": "You will be charged {amount} in Pakistani Rupees.",
+    "usdEstimate": "USD amounts are estimates for reference.",
+    "editBag": "Edit bag",
+    "qty": "Qty {count}",
+    "empty": "Your bag is empty",
+    "emptyText": "Add a few pieces before checking out.",
+    "issues": "Some items in your bag need attention before checkout.",
+    "reviewBag": "Review bag",
+    "optional": "optional",
+    "errorSummary": "Please check the highlighted fields."
+  },
+  "order": {
+    "thankYou": "Thank you, {name}",
+    "placed": "Your order has been placed",
+    "placedText": "We have received your order and will confirm it shortly.",
+    "number": "Order number",
+    "date": "Order date",
+    "method": "Payment method",
+    "payment": "Payment",
+    "status": "Order status",
+    "deliverTo": "Delivery address",
+    "contact": "Contact",
+    "items": "Items",
+    "track": "Track order",
+    "continue": "Continue shopping",
+    "viewOrders": "View my orders",
+    "details": "Order details",
+    "allOrders": "All orders",
+    "codNote": "Please keep {amount} ready for the courier.",
+    "tbcNote": "The delivery fee will be confirmed by our team.",
+    "pendingText": "We are waiting for confirmation from the payment provider.",
+    "failedTitle": "Payment was not completed",
+    "failedText": "This order has been cancelled. If an amount was deducted, contact us with your order number and we will help.",
+    "cancelledTitle": "Payment cancelled",
+    "cancelledText": "The payment was cancelled, so this order was not completed. Your bag is still saved.",
+    "orderCancelled": "This order was cancelled.",
+    "retry": "Return to bag",
+    "support": "Contact support",
+    "note": "Your note",
+    "methods": {
+      "COD": "Cash on delivery",
+      "PAYNOW": "PayNow"
+    },
+    "paymentStatuses": {
+      "PENDING": "Pending",
+      "PAID": "Paid",
+      "FAILED": "Failed",
+      "CANCELLED": "Cancelled",
+      "REFUNDED": "Refunded"
+    },
+    "steps": {
+      "NEW": "Order placed",
+      "CONFIRMED": "Confirmed",
+      "PROCESSING": "Processing",
+      "PACKED": "Packed",
+      "SHIPPED": "Shipped",
+      "DELIVERED": "Delivered",
+      "CANCELLED": "Cancelled"
+    },
+    "progress": "Order progress",
+    "current": "Current status",
+    "completed": "Completed",
+    "upcoming": "Upcoming",
+    "viewDetails": "View details",
+    "itemCount": "{count} items",
+    "itemCountOne": "{count} item"
+  },
+  "tracking": {
+    "title": "Track your order",
+    "eyebrow": "Order status",
+    "intro": "Enter your order number and the email address you used at checkout.",
+    "orderNumber": "Order number",
+    "email": "Email",
+    "submit": "Track order",
+    "searching": "Searching",
+    "notFound": "We could not find an order with these details. Please check the order number and email.",
+    "signedIn": "Signed in? Your orders and their status are also in your account.",
+    "lastUpdate": "Last update: {date}",
+    "another": "Track another order"
+  },
+  "notify": {
+    "brand": "4 BRO — CREATE YOUR LEGACY",
+    "placedTitle": "Your order has been placed.",
+    "placedText": "Thank you — we have received your order and will confirm it shortly.",
+    "paymentTitle": "Payment received.",
+    "paymentText": "We have received your payment of {amount}. Your order is now being prepared.",
+    "status": {
+      "CONFIRMED": "Your order has been confirmed.",
+      "PROCESSING": "We are preparing your order.",
+      "PACKED": "Your order is packed and ready to ship.",
+      "SHIPPED": "Your order is on its way.",
+      "DELIVERED": "Your order has been delivered. We hope you love it.",
+      "CANCELLED": "Your order has been cancelled."
+    },
+    "cancelledText": "If you did not request this or have questions, please contact us.",
+    "order": "Order",
+    "customer": "Customer",
+    "items": "Items",
+    "total": "Total",
+    "payment": "Payment",
+    "delivery": "Delivery",
+    "deliveryTbc": "Delivery fee to be confirmed",
+    "tracking": "Tracking",
+    "track": "Track your order",
+    "thanks": "Thank you for choosing 4 BRO.",
+    "tagline": "CREATE YOUR LEGACY",
+    "subjectPlaced": "4 BRO Order Confirmation — #{number}",
+    "subjectStatus": "Your 4 BRO order #{number} — {status}",
+    "subjectPayment": "Payment received — 4 BRO order #{number}",
+    "emailGreeting": "Dear {name},",
+    "emailFooter": "Questions about your order? Reply to this email or message us on WhatsApp.",
+    "emailRights": "© {year} 4 BRO. All rights reserved.",
+    "qty": "Qty {count}",
+    "subtotal": "Subtotal",
+    "deliverTo": "Delivery address"
+  },
+  "welcome": {
+    "skip": "Skip intro"
+  },
+  "home": {
+    "hero": {
+      "subtitle": "Premium fashion and lifestyle — considered pieces for every chapter.",
+      "cta": "Shop now",
+      "secondary": "Explore accessories",
+      "alt": "Hooded figure silhouetted against a stormy evening sky"
+    },
+    "departments": {
+      "heading": "Shop by department",
+      "shop": "Shop",
+      "alts": {
+        "men": "Man in tailored black and white walking through a studio set",
+        "women": "Woman in an ivory suit photographed in black and white",
+        "kids": "Young boy in a cream jacket against a black backdrop",
+        "accessories": "Watch with a cream dial and brown strap on black"
+      }
+    },
+    "men": {
+      "title": "The Modern Uniform",
+      "description": "Tailoring that relaxes, outerwear that layers and essentials cut with intent. Built around a few pieces you will reach for again and again.",
+      "cta": "Shop men",
+      "altMain": "Man in an open black suit jacket against a pale studio wall",
+      "altDetail": "Man in a brown suede jacket seen from behind"
+    },
+    "women": {
+      "title": "Quiet Confidence",
+      "description": "Sharp shoulders, fluid trousers and a refined palette. Pieces that work as hard as you do and look effortless doing it.",
+      "cta": "Shop women",
+      "altMain": "Woman in a grey wool coat photographed in black and white",
+      "altDetail": "Woman in a short black blazer and knee socks"
+    },
+    "kids": {
+      "title": "The Next Generation",
+      "description": "Smart, comfortable clothing for children — made for play, ready for occasions.",
+      "cta": "Shop kids",
+      "altMain": "Young boy in a patterned black shirt",
+      "altDetail": "Child in a teal puffer jacket and bucket hat walking outdoors"
+    },
+    "links": {
+      "shirts": "Shirts",
+      "jackets": "Jackets",
+      "dresses": "Dresses",
+      "tops": "Tops",
+      "hoodies": "Hoodies",
+      "tshirts": "T-Shirts",
+      "newIn": "New in"
+    },
+    "accessories": {
+      "title": "Beyond the Wardrobe",
+      "description": "The finishing pieces — timepieces, fragrance and leather goods selected to live alongside the collection.",
+      "cta": "Shop all accessories",
+      "explore": "Explore",
+      "alts": {
+        "watches": "Skeleton watch resting in a dark presentation box",
+        "perfumes": "Amber perfume bottle on draped gold satin",
+        "handbags": "Grey top-handle bag passed between two hands",
+        "bags": "Brown leather satchel on a wooden stool"
+      }
+    },
+    "story": {
+      "eyebrow": "Our philosophy",
+      "body1": "4 BRO started with a simple belief: what you wear should carry intent. We design and select pieces with clean lines, careful construction and a palette that lasts beyond a single season.",
+      "body2": "From tailoring to fragrance, every piece is chosen to be worn often and kept for years — a wardrobe you build deliberately, one chapter at a time.",
+      "alt": "Woman in sunglasses and an oversized wool coat, black and white"
+    },
+    "promo": {
+      "eyebrow": "The latest drop",
+      "title": "Discover the Collection",
+      "cta": "Shop now",
+      "alt": "Model in a wide-sleeved black jacket, silhouetted against white"
+    },
+    "lookbook": {
+      "eyebrow": "Lookbook",
+      "title": "Worn Your Way",
+      "description": "Campaign stories, styling and the collection in motion.",
+      "follow": "Follow on {network}",
+      "alts": [
+        "Woman in a navy jacket crouching under cool city light",
+        "Man in profile lit by a single blue light",
+        "Two people in dark tailoring by the sea, black and white",
+        "Two men in black leather and denim",
+        "Leather holdall resting on an empty road",
+        "Woman with hands in her hair, black and white portrait"
+      ]
+    },
+    "showcase": {
+      "newEyebrow": "Just in",
+      "newTitle": "New Arrivals",
+      "newText": "The latest pieces across men, women, kids and accessories — added as each drop lands.",
+      "viewAll": "View all",
+      "featuredEyebrow": "Curated",
+      "featuredTitle": "Featured",
+      "featuredText": "Pieces our team is wearing and recommending right now.",
+      "bestEyebrow": "Most wanted",
+      "bestTitle": "Best Sellers",
+      "bestText": "The pieces customers return to most.",
+      "bestAction": "Shop best sellers",
+      "emptyTitle": "Coming soon",
+      "emptyText": "New pieces are being prepared for this edit."
+    }
+  },
+  "pages": {
+    "contactLabels": {
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "whatsappValue": "Chat with our team",
+      "none": "Contact details are shared on request through your order confirmation.",
+      "orderHelp": "For questions about an order, include your order number (for example 4BRO-20261003-XXXXXX).",
+      "phone": "Phone",
+      "address": "Address"
+    },
+    "continue": "Continue shopping",
+    "updated": "These pages describe how the 4 BRO store works today. For anything not covered here, contact us and our team will help.",
+    "about": {
+      "title": "About 4 BRO",
+      "eyebrow": "Our story",
+      "intro": "Create Your Legacy.",
+      "sections": [
+        {
+          "h": "",
+          "p": [
+            "4 BRO is a fashion and lifestyle house for men, women and kids, with accessories chosen to complete every look — watches, perfumes, hand bags and bags.",
+            "We focus on clean lines, careful construction and a restrained palette: pieces designed to be worn often and kept for years rather than replaced each season.",
+            "The name is a promise between us and the people who wear what we make — to build something lasting together."
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "title": "Contact",
+      "eyebrow": "Help",
+      "intro": "We're here to help with orders, sizing and anything else.",
+      "sections": []
+    },
+    "shipping": {
+      "title": "Shipping & Delivery",
+      "eyebrow": "Help",
+      "intro": "How orders are prepared, delivered and tracked.",
+      "sections": [
+        {
+          "h": "Where we deliver",
+          "p": [
+            "We deliver across Pakistan. For delivery outside Pakistan, place your order with your full address — our team will confirm the delivery fee and options for your destination before dispatch."
+          ]
+        },
+        {
+          "h": "Delivery fee",
+          "p": [
+            "{feeText}"
+          ]
+        },
+        {
+          "h": "After you order",
+          "p": [
+            "You receive a confirmation on WhatsApp (or by email if WhatsApp is unavailable). Our team confirms the order, then it is prepared, packed and handed to the courier — you are notified at each step.",
+            "You can follow every stage in your account under Orders, or on the Track Order page with your order number and email."
+          ]
+        },
+        {
+          "h": "Paying on delivery",
+          "p": [
+            "With cash on delivery, please have the order total ready for the courier. All orders are charged in Pakistani Rupees."
+          ]
+        }
+      ]
+    },
+    "returns": {
+      "title": "Returns & Refunds",
+      "eyebrow": "Help",
+      "intro": "If something isn't right, we'll work it out with you.",
+      "sections": [
+        {
+          "h": "Requesting a return",
+          "p": [
+            "Contact us with your order number and the item you'd like to return before sending anything back. Our team will review the request and confirm whether the item can be returned, and how to send it."
+          ]
+        },
+        {
+          "h": "Condition of items",
+          "p": [
+            "Please keep items in the condition you received them, with original packaging and tags, while your request is reviewed."
+          ]
+        },
+        {
+          "h": "Refunds",
+          "p": [
+            "Once a return is approved and the item has been received and checked, our team confirms the refund amount and method with you directly."
+          ]
+        }
+      ]
+    },
+    "exchange": {
+      "title": "Exchanges",
+      "eyebrow": "Help",
+      "intro": "Need a different size or colour?",
+      "sections": [
+        {
+          "h": "How exchanges work",
+          "p": [
+            "Contact us with your order number and the size or colour you need. Exchanges depend on the replacement being in stock — our team will confirm availability and the next steps."
+          ]
+        },
+        {
+          "h": "Before you send anything",
+          "p": [
+            "Please wait for our confirmation before returning an item for exchange, so we can make sure the replacement is reserved for you."
+          ]
+        }
+      ]
+    },
+    "size-guide": {
+      "title": "Size Guide",
+      "eyebrow": "Help",
+      "intro": "Finding the right fit.",
+      "sections": [
+        {
+          "h": "Sizes on each product",
+          "p": [
+            "Every product page lists the sizes that piece is made in. Sizes that are currently unavailable are crossed out, and the exact stock is shown once you choose a size."
+          ]
+        },
+        {
+          "h": "Measuring",
+          "p": [
+            "The most reliable guide is a similar piece you already own and like the fit of: compare chest, waist and length measured flat. Kids' sizes are listed by age."
+          ]
+        },
+        {
+          "h": "Ask us",
+          "p": [
+            "Not sure between two sizes? Message us on WhatsApp from the product page — the enquiry includes the piece and size you are looking at."
+          ]
+        }
+      ]
+    },
+    "faqs": {
+      "title": "FAQs",
+      "eyebrow": "Help",
+      "intro": "Quick answers to common questions.",
+      "sections": [
+        {
+          "h": "Do I need an account to order?",
+          "p": [
+            "Yes. Your bag, favourites and orders are saved to your account so they are available on every device. Creating an account takes a minute."
+          ]
+        },
+        {
+          "h": "How can I pay?",
+          "p": [
+            "Cash on delivery is available on every order. Online payment appears at checkout when it is available for your order."
+          ]
+        },
+        {
+          "h": "What does delivery cost?",
+          "p": [
+            "{feeText}"
+          ]
+        },
+        {
+          "h": "Can I see prices in US dollars?",
+          "p": [
+            "Yes — choose USD in the currency menu. USD amounts are estimates for reference; orders are always charged in Pakistani Rupees."
+          ]
+        },
+        {
+          "h": "How do I track my order?",
+          "p": [
+            "Open Orders in your account, or use the Track Order page with your order number and the email used at checkout. We also message you on WhatsApp (or email) as your order progresses."
+          ]
+        },
+        {
+          "h": "Can I change or cancel an order?",
+          "p": [
+            "Contact us as soon as possible with your order number. Orders can be changed or cancelled before they are shipped."
+          ]
+        },
+        {
+          "h": "Which languages are available?",
+          "p": [
+            "English, اردو and हिन्दी — use the language menu at the top of any page. Your choice is remembered."
+          ]
+        }
+      ]
+    },
+    "privacy-policy": {
+      "title": "Privacy Policy",
+      "eyebrow": "Legal",
+      "intro": "What we collect, why, and the choices you have.",
+      "sections": [
+        {
+          "h": "Information we collect",
+          "p": [
+            "Account details you give us (name, email, phone), delivery addresses, the contents of your bag, favourites and saved items, and your orders and their status.",
+            "We do not ask for national identity numbers and we do not store payment card details."
+          ]
+        },
+        {
+          "h": "How we use it",
+          "p": [
+            "To process and deliver orders, to keep your account and bag in sync across devices, to send order updates by WhatsApp (or email when WhatsApp is unavailable), and to help when you contact us."
+          ]
+        },
+        {
+          "h": "Cookies and storage",
+          "p": [
+            "We use only what the store needs to work: a sign-in session cookie, a cookie that remembers your language, and storage in your browser for your currency preference and recent searches. We do not use advertising or third-party tracking cookies."
+          ]
+        },
+        {
+          "h": "Service providers",
+          "p": [
+            "We share only the information needed with the services that run the store: image hosting, WhatsApp messaging, email delivery, an online payment provider when you choose online payment, and couriers who deliver your order."
+          ]
+        },
+        {
+          "h": "Security",
+          "p": [
+            "Passwords are stored as strong one-way hashes, sessions can be ended at any time by signing out, and the site is served over an encrypted connection."
+          ]
+        },
+        {
+          "h": "Your choices",
+          "p": [
+            "You can update your name, phone and addresses in your account at any time. To request a copy or deletion of your data, contact us — order records may be kept where we are required to keep them."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms & Conditions",
+      "eyebrow": "Legal",
+      "intro": "The terms that apply when you shop with 4 BRO.",
+      "sections": [
+        {
+          "h": "Prices and currency",
+          "p": [
+            "Prices are set and charged in Pakistani Rupees (PKR). Amounts shown in US dollars are estimates for reference only. The price charged is the one confirmed at checkout."
+          ]
+        },
+        {
+          "h": "Orders",
+          "p": [
+            "Placing an order is an offer to buy. You receive an order number immediately; our team then confirms the order. Items are reserved when you place the order, subject to availability."
+          ]
+        },
+        {
+          "h": "Payment",
+          "p": [
+            "Cash on delivery orders are paid to the courier on delivery. Online payments are only treated as paid after the payment provider confirms them."
+          ]
+        },
+        {
+          "h": "Delivery",
+          "p": [
+            "{feeText} Delivery details are described on our Shipping & Delivery page."
+          ]
+        },
+        {
+          "h": "Cancellations, returns and exchanges",
+          "p": [
+            "Orders can be cancelled before they are shipped. Returns and exchanges are handled as described on those pages."
+          ]
+        },
+        {
+          "h": "Your account",
+          "p": [
+            "Keep your password private and let us know if you think someone else has used your account. We may suspend accounts that are used fraudulently."
+          ]
+        },
+        {
+          "h": "Product information",
+          "p": [
+            "We make every effort to show products accurately; colours can vary slightly between screens."
+          ]
+        }
+      ]
+    },
+    "fee": {
+      "configured": "Standard delivery within Pakistan costs {fee}.",
+      "free": "Delivery is free on orders of {threshold} or more.",
+      "tbc": "The delivery fee for your address is confirmed by our team according to our shipping policy before your order is dispatched — it is shown as \"to be confirmed\" at checkout."
+    }
+  },
+  "system": {
+    "offline": "You appear to be offline. Some content may not load until your connection returns.",
+    "whatsappLabel": "Chat with 4 BRO on WhatsApp (opens in a new tab)",
+    "whatsappHover": "Chat with us",
+    "whatsappMessage": "Hello 4 BRO, I'd like some help.",
+    "loadingProducts": "Loading products",
+    "errorEyebrow": "Something went wrong",
+    "errorTitle": "We could not load this page",
+    "errorText": "Please try again in a moment.",
+    "reference": "Reference: {id}",
+    "returnHome": "Return home",
+    "notFoundEyebrow": "Error 404",
+    "notFoundTitle": "This page has moved on.",
+    "notFoundText": "The page you are looking for does not exist or is no longer available."
+  }
+}

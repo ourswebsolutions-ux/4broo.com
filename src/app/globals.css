@@ -1,0 +1,642 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   4 BRO design tokens
+   Derived from the brand mark: deep warm black, charcoal, off-white paper and
+   the metallic gold of the crest — gold is the ONLY accent and is used
+   sparingly (labels, rules, hover states, primary CTA on dark).
+   All text/background pairings below meet WCAG AA (≥ 4.5:1).
+   ────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Neutrals */
+  --color-ink: #0b0b0a; /* primary black */
+  --color-ink-soft: #1a1918; /* charcoal surfaces */
+  --color-graphite: #2a2927; /* raised charcoal / borders on dark */
+  --color-paper: #f7f5f0; /* off-white page background */
+  --color-bone: #efebe4; /* alternate light section */
+  --color-sand: #e4ded4;
+  --color-line: #e0dad0; /* hairlines on light */
+  --color-mute: #6f6a62; /* secondary text on light (4.9:1) */
+  --color-subtle: #56524b; /* body copy on light (7.1:1) */
+  --color-mist: #a39e95; /* secondary text on dark (7.4:1) */
+
+  /* Brand gold (sampled from logo: #F9D562 → #D6A545 → #A16A1B) */
+  --color-gold: #c9a24c; /* accent on dark (8.2:1 on ink) */
+  --color-gold-light: #e3c57a; /* hover on dark */
+  --color-gold-deep: #8a6a2f; /* gold text on light (4.6:1) */
+  --color-brass: #8a6a2f; /* legacy alias */
+
+  /* Feedback */
+  --color-danger: #9f2d2d;
+  --color-success: #2e5b45;
+
+  /* Type */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), "Times New Roman", serif;
+
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--letter-spacing: 0.28em;
+  --text-eyebrow--line-height: 1.4;
+
+  --text-title: clamp(1.75rem, 1.6vw + 1.2rem, 2.5rem);
+  --text-title--line-height: 1.08;
+  --text-display-sm: clamp(2.25rem, 3.4vw + 1.1rem, 3.75rem);
+  --text-display-sm--line-height: 1.02;
+  --text-display: clamp(2.75rem, 6vw + 1rem, 6rem);
+  --text-display--line-height: 0.96;
+  --text-display-lg: clamp(3.25rem, 10vw, 10rem);
+  --text-display-lg--line-height: 0.9;
+
+  --tracking-brand: 0.42em;
+  --tracking-display: 0.04em;
+
+  --breakpoint-3xl: 112rem;
+
+  /* Layout */
+  --header-height: 4rem;
+
+  /* Motion — short, eased, never bouncy */
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-reveal: reveal 900ms var(--ease-luxe) both;
+  --animate-fade: fade 600ms ease-out both;
+  --animate-pop: pop 380ms var(--ease-luxe);
+  --animate-page: page-enter 450ms var(--ease-luxe) both;
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.12);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+/* ── Layout utilities ──────────────────────────────────────────────────── */
+
+/* Fluid page gutter shared by every section, header and footer. */
+@utility container-page {
+  width: 100%;
+  max-width: 96rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3.5rem);
+}
+
+@utility container-narrow {
+  width: 100%;
+  max-width: 44rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+@utility section-y {
+  padding-block: clamp(4rem, 9vw, 9rem);
+}
+
+@utility section-y-sm {
+  padding-block: clamp(3rem, 6vw, 6rem);
+}
+
+@utility eyebrow {
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  line-height: var(--text-eyebrow--line-height);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Editorial display headline: light serif capitals, slightly tracked. */
+@utility headline {
+  font-family: var(--font-display);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-display);
+}
+
+/* Short gold rule used under eyebrows / between editorial elements. */
+@utility rule-gold {
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--color-gold);
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Scroll reveal (CSS only, no JS) ───────────────────────────────────────
+   Uses scroll-driven animations where supported; elsewhere content is simply
+   visible. Disabled for users who prefer reduced motion. */
+@layer components {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        animation: reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 40%;
+      }
+    }
+  }
+}
+
+/* ── Script-specific typography (Urdu RTL Nastaliq, Hindi Devanagari) ────────
+   Letter-spacing breaks Arabic-script joining and Devanagari conjuncts, and
+   case transforms do not apply — so labels/headlines are reset for these
+   scripts. Latin text (brand name, SKUs) falls back to Manrope / Cormorant. */
+@layer base {
+  :lang(ur) {
+    --font-sans: var(--font-nastaliq), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-nastaliq), var(--font-cormorant), serif;
+  }
+  :lang(hi) {
+    --font-sans: var(--font-devanagari), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-devanagari), var(--font-cormorant), serif;
+  }
+  :lang(ur) body {
+    line-height: 1.9;
+  }
+}
+@layer utilities {
+  :lang(ur) .eyebrow,
+  :lang(hi) .eyebrow,
+  :lang(ur) .headline,
+  :lang(hi) .headline {
+    letter-spacing: normal !important;
+    text-transform: none;
+  }
+  :lang(ur) .eyebrow {
+    font-size: 0.8125rem !important;
+    font-weight: 400;
+  }
+  :lang(hi) .eyebrow {
+    font-size: 0.75rem !important;
+  }
+  :lang(ur) .headline {
+    font-weight: 400;
+    line-height: 1.55 !important;
+  }
+  :lang(hi) .headline {
+    font-weight: 500;
+    line-height: 1.25 !important;
+  }
+}
+
+/* ── Depth & parallax (CSS scroll-driven; no JS) ─────────────────────────────
+   Restrained: small translations only, tablet/desktop only, never for users who
+   prefer reduced motion, and simply static where scroll timelines are unsupported. */
+@keyframes hero-parallax {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.06);
+  }
+  to {
+    transform: translate3d(0, 9%, 0) scale(1);
+  }
+}
+@keyframes hero-content-out {
+  to {
+    opacity: 0.15;
+    transform: translate3d(0, -6%, 0);
+  }
+}
+@keyframes depth-near {
+  from {
+    transform: translate3d(0, 48px, 0);
+  }
+  to {
+    transform: translate3d(0, -48px, 0);
+  }
+}
+@keyframes depth-far {
+  from {
+    transform: translate3d(0, -14px, 0) scale(1.04);
+  }
+  to {
+    transform: translate3d(0, 14px, 0) scale(1.04);
+  }
+}
+@layer components {
+  @supports (animation-timeline: scroll()) {
+    @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+      .hero-parallax {
+        animation: hero-parallax linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 100vh;
+        will-change: transform;
+      }
+      .hero-content {
+        animation: hero-content-out linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 85vh;
+      }
+      .depth-near {
+        animation: depth-near linear both;
+        animation-timeline: view();
+      }
+      .depth-far,
+      .parallax-media {
+        animation: depth-far linear both;
+        animation-timeline: view();
+      }
+    }
+  }
+}
+
+/* Product card perspective response (values set by useTilt on fine pointers only). */
+@layer components {
+  .tilt {
+    transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translate3d(0, var(--tilt-lift, 0px), 0);
+    transition:
+      transform 450ms var(--ease-luxe),
+      box-shadow 450ms var(--ease-luxe);
+    transform-style: preserve-3d;
+  }
+  .tilt[data-tilting="true"] {
+    transition: transform 120ms linear, box-shadow 450ms var(--ease-luxe);
+  }
+}
+
+/* ── Price range slider (two overlaid inputs; only the thumbs take pointer input) ── */
+@layer components {
+  .price-thumb::-webkit-slider-thumb {
+    pointer-events: auto;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
+    background: var(--color-paper);
+    border: 1.5px solid var(--color-ink);
+    cursor: grab;
+    transition: transform 150ms ease;
+  }
+  .price-thumb::-moz-range-thumb {
+    pointer-events: auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
+    background: var(--color-paper);
+    border: 1.5px solid var(--color-ink);
+    cursor: grab;
+  }
+  .price-thumb:active::-webkit-slider-thumb {
+    transform: scale(1.15);
+    cursor: grabbing;
+  }
+  .price-thumb:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+  .price-thumb::-webkit-slider-runnable-track {
+    background: transparent;
+  }
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: calc(var(--header-height) + 1rem);
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+
+  /* Visible focus everywhere; currentColor keeps it legible on light and dark. */
+  :focus-visible {
+    outline: 1.5px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* Native <dialog> drawers: backdrop + discrete enter/exit transitions. */
+  dialog::backdrop {
+    background: rgb(11 11 10 / 0.55);
+    opacity: 0;
+    transition:
+      opacity 300ms ease,
+      overlay 300ms allow-discrete,
+      display 300ms allow-discrete;
+  }
+  dialog[open]::backdrop {
+    opacity: 1;
+  }
+  @starting-style {
+    dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ── Welcome sequence (Phase 9) ────────────────────────────────────────────────
+   CSS-only choreography, ~2.6 s, once per browser session (gate script in the
+   storefront layout sets html[data-welcome]). Without JS or after the first
+   visit the splash is never displayed. States: play (intro running, page
+   entrance held) → reveal (page entrance released, curtain continues) → done;
+   exit = skipped by click/key (short curtain). Timeline:
+     0.00  ink stage + slow ambient light
+     0.15  logo: blur → sharp, 0.94 → 1
+     0.95  light sweep across the logo (masked to the artwork)
+     0.90  "4 BRO" letters rise from a mask (staggered)
+     1.35  tagline + gold rules
+     2.15  content lifts away; 2.30 the curtain rises, the homepage is revealed  */
+@keyframes welcome-ambient {
+  from { opacity: 0; transform: translate3d(-4%, 3%, 0) scale(0.9); }
+  to { opacity: 1; transform: translate3d(3%, -2%, 0) scale(1.05); }
+}
+@keyframes welcome-logo {
+  from { opacity: 0; filter: blur(14px); transform: scale(0.94); }
+  to { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+@keyframes welcome-sheen {
+  from { transform: translateX(-120%) skewX(-18deg); }
+  to { transform: translateX(220%) skewX(-18deg); }
+}
+@keyframes welcome-letter {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+@keyframes welcome-tagline {
+  from { opacity: 0; letter-spacing: 0.62em; }
+  to { opacity: 1; letter-spacing: 0.42em; }
+}
+@keyframes welcome-rule {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes welcome-content-out {
+  to { opacity: 0; transform: translateY(-14px); }
+}
+@keyframes welcome-curtain {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); visibility: hidden; }
+}
+@keyframes welcome-fade-out {
+  to { opacity: 0; visibility: hidden; }
+}
+@keyframes welcome-header-in {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes welcome-hero-image {
+  from { scale: 1.08; }
+  to { scale: 1; }
+}
+
+@layer components {
+  .welcome {
+    display: none;
+  }
+  html[data-welcome="play"] .welcome,
+  html[data-welcome="reveal"] .welcome,
+  html[data-welcome="exit"] .welcome {
+    --welcome-ease: cubic-bezier(0.76, 0, 0.24, 1);
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: max(1.5rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
+    overflow: hidden;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    cursor: pointer;
+    animation: welcome-curtain 850ms var(--welcome-ease) 2300ms both;
+  }
+
+  .welcome__ambient {
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(closest-side at 50% 46%, rgb(201 162 77 / 0.12), rgb(201 162 77 / 0.07) 35%, rgb(201 162 77 / 0.025) 65%, rgb(201 162 77 / 0) 100%);
+    animation: welcome-ambient 2600ms ease-out both;
+    pointer-events: none;
+  }
+  .welcome__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.25rem, 3vh, 2rem);
+    text-align: center;
+    animation: welcome-content-out 450ms ease-in 2150ms both;
+  }
+  .welcome__mark {
+    position: relative;
+    width: clamp(7.5rem, 22vw, 11.5rem);
+    aspect-ratio: 400 / 405;
+    animation: welcome-logo 1000ms cubic-bezier(0.22, 1, 0.36, 1) 150ms both;
+  }
+  .welcome__mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  /* A soft light pass constrained to the artwork's own shape (the logo is not altered). */
+  .welcome__sheen {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    mask: url("/brand/logo-mark-splash.webp") center / contain no-repeat;
+    pointer-events: none;
+  }
+  .welcome__sheen::after {
+    content: "";
+    position: absolute;
+    inset: -10% auto -10% 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.55), transparent);
+    animation: welcome-sheen 700ms ease-in-out 950ms both;
+  }
+  .welcome__word {
+    display: flex;
+    gap: 0.04em;
+    overflow: hidden;
+    padding-block: 0.06em;
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 9vw, 4.75rem);
+    line-height: 1;
+    letter-spacing: 0.18em;
+    font-variant-numeric: lining-nums;
+    margin-inline-end: -0.18em; /* optical centring of tracked type */
+  }
+  .welcome__word .welcome__space {
+    width: 0.12em;
+  }
+  .welcome__word span {
+    display: inline-block;
+    animation: welcome-letter 750ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(900ms + var(--i) * 60ms);
+  }
+  .welcome__tagline {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 3vw, 1.25rem);
+    font-family: var(--font-manrope), system-ui, sans-serif;
+    font-size: clamp(0.625rem, 2.6vw, 0.75rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    white-space: nowrap;
+  }
+  .welcome__tagline span {
+    animation: welcome-tagline 800ms cubic-bezier(0.22, 1, 0.36, 1) 1350ms both;
+    margin-inline-end: -0.42em;
+  }
+  .welcome__rule {
+    width: clamp(1.25rem, 6vw, 3rem);
+    height: 1px;
+    background: var(--color-gold);
+    animation: welcome-rule 700ms cubic-bezier(0.22, 1, 0.36, 1) 1400ms both;
+  }
+  .welcome__rule:first-child {
+    transform-origin: right;
+  }
+  .welcome__rule:last-child {
+    transform-origin: left;
+  }
+  .welcome__skip {
+    position: absolute;
+    inset-block-end: max(1.25rem, env(safe-area-inset-bottom));
+    inset-inline-end: max(1.25rem, env(safe-area-inset-right));
+    min-height: 2.75rem;
+    padding: 0 0.75rem;
+    font-family: var(--font-manrope), system-ui, sans-serif;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgb(245 243 238 / 0.45);
+    transition: color 300ms;
+    animation: welcome-fade-in 600ms ease-out 600ms both;
+  }
+  .welcome__skip:hover,
+  .welcome__skip:focus-visible {
+    color: var(--color-paper);
+  }
+
+  /* Skipped (click / key): leave immediately with a short curtain. */
+  html[data-welcome="exit"] .welcome {
+    animation: welcome-curtain 600ms var(--welcome-ease) both;
+  }
+  html[data-welcome="exit"] .welcome__content {
+    animation: welcome-content-out 250ms ease-in both;
+  }
+
+  html[data-welcome="play"] [data-entrance="header"],
+  html[data-welcome="reveal"] [data-entrance="header"],
+  html[data-welcome="exit"] [data-entrance="header"] {
+    animation: welcome-header-in 700ms cubic-bezier(0.22, 1, 0.36, 1) 2550ms both;
+  }
+  html[data-welcome="exit"] [data-entrance="header"] {
+    animation-delay: 150ms;
+  }
+  html[data-welcome="play"] .hero-media,
+  html[data-welcome="reveal"] .hero-media,
+  html[data-welcome="exit"] .hero-media {
+    animation: welcome-hero-image 1800ms cubic-bezier(0.22, 1, 0.36, 1) 2300ms both;
+  }
+  html[data-welcome="exit"] .hero-media {
+    animation-delay: 0ms;
+  }
+
+  /* Reduced motion: logo and words simply appear, then a quick fade reveals the page. */
+  @media (prefers-reduced-motion: reduce) {
+    html[data-welcome="play"] .welcome,
+    html[data-welcome="reveal"] .welcome,
+    html[data-welcome="exit"] .welcome {
+      animation: welcome-fade-out 350ms ease-out 700ms both !important;
+    }
+    html[data-welcome="exit"] .welcome {
+      animation-delay: 0ms !important;
+    }
+    .welcome *,
+    .welcome *::after {
+      animation: none !important;
+    }
+    html[data-welcome] .hero-media,
+    html[data-welcome] [data-entrance="header"] {
+      animation: none !important;
+    }
+  }
+}
+@keyframes welcome-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Homepage entrance, held while the intro plays and released as the curtain rises.
+   Unlayered on purpose: it must win over the `animate-*` utilities' shorthand. */
+html[data-welcome="play"] .animate-reveal {
+  animation-play-state: paused;
+}

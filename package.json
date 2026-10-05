@@ -1,0 +1,51 @@
+{
+  "name": "4broo.com",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "postinstall": "prisma generate",
+    "db:format": "prisma format",
+    "db:validate": "prisma validate",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:status": "prisma migrate status",
+    "db:seed": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local --disable-warning=ExperimentalWarning prisma/seed.mjs",
+    "prisma:db:products-seed": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local --disable-warning=ExperimentalWarning prisma/seed-products.mjs",
+    "db:studio": "prisma studio",
+    "admin:create": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local --disable-warning=ExperimentalWarning scripts/create-admin.mjs",
+    "verify": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local --disable-warning=ExperimentalWarning scripts/verify.mjs"
+  },
+  "dependencies": {
+    "@prisma/adapter-mariadb": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "cloudinary": "^2.11.0",
+    "next": "16.3.8",
+    "nodemailer": "^10.0.13",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "dotenv": "^18.0.5",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.8",
+    "prisma": "^7.10.0",
+    "tailwindcss": "^4"
+  },
+  "overrides": {
+    "mariadb": "^3.5.4",
+    "mysql2": "^3.24.5",
+    "deepmerge-ts": "^8.0.2"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

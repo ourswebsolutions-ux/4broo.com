@@ -1,0 +1,638 @@
+// 4 BRO — database schema (MySQL / MariaDB via Prisma)
+//
+// Conventions
+// - Primary keys are CUIDs (non-sequential, safe to expose in URLs).
+// - Money is DECIMAL(12,2). Canonical prices are stored in PKR; USD is a
+//   display conversion (see src/lib/currency). Never use floats for money.
+// - Stock columns are UNSIGNED (can never go negative). Additional CHECK
+//   constraints (quantities > 0, non-negative money, no self-parent category)
+//   are added in the migration SQL because Prisma cannot express them.
+// - Every purchasable product has ≥ 1 ProductVariant (single-variant products
+//   such as perfumes use one variant with size/color = NULL), so cart, saved
+//   and order items always reference a variant.
+// - Orders snapshot customer, address and product data; deleting a product or
+//   user never deletes order history (SetNull / Restrict, never Cascade).
+// - Translatable catalogue content lives in *Translation tables (base fields
+//   are English). UI strings live in src/i18n — never in the database.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum Gender {
+  MEN
+  WOMEN
+  KIDS
+  UNISEX
+}
+
+enum CategoryStatus {
+  ACTIVE
+  HIDDEN
+}
+
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum OrderStatus {
+  NEW
+  CONFIRMED
+  PROCESSING
+  PACKED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  COD
+  PAYNOW
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum Currency {
+  PKR
+  USD
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Identity & access
+// ─────────────────────────────────────────────────────────────────────────────
+
+model User {
+  id              String     @id @default(cuid())
+  email           String     @unique @db.VarChar(191)
+  passwordHash    String     @db.VarChar(255)
+  firstName       String     @db.VarChar(80)
+  lastName        String     @db.VarChar(80)
+  phone           String?    @db.VarChar(32)
+  role            Role       @default(CUSTOMER)
+  status          UserStatus @default(ACTIVE)
+  emailVerifiedAt DateTime?
+  lastLoginAt     DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  sessions            Session[]
+  passwordResetTokens PasswordResetToken[]
+  addresses           Address[]
+  cart                Cart?
+  wishlistItems       WishlistItem[]
+  savedItems          SavedItem[]
+  orders              Order[]
+  settingsUpdated     SystemSetting[]
+  settingAudits       SettingAuditLog[]
+
+  @@index([role, status])
+  @@index([createdAt])
+}
+
+/// Server-side session. The browser holds an opaque random token; only its
+/// HMAC is stored, so a leaked database cannot be replayed.
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique @db.Char(64)
+  userId    String
+  expiresAt DateTime
+  ipAddress String?  @db.VarChar(45)
+  userAgent String?  @db.VarChar(255)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique @db.Char(64)
+  userId    String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Address {
+  id          String   @id @default(cuid())
+  userId      String
+  label       String?  @db.VarChar(40)
+  fullName    String   @db.VarChar(160)
+  phone       String   @db.VarChar(32)
+  addressLine String   @db.VarChar(255)
+  city        String   @db.VarChar(100)
+  postalCode  String?  @db.VarChar(20)
+  country     String   @default("Pakistan") @db.VarChar(60)
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isDefault])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Catalogue
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Two-level tree: departments (parentId = NULL) and their subcategories.
+/// Cycle / depth rules are enforced in src/services/categoryService.js;
+/// a CHECK constraint additionally forbids parentId = id.
+model Category {
+  id            String         @id @default(cuid())
+  name          String         @db.VarChar(120)
+  slug          String         @unique @db.VarChar(160)
+  description   String?        @db.Text
+  imageUrl      String?        @db.VarChar(500)
+  imagePublicId String?        @db.VarChar(255)
+  parentId      String?
+  status        CategoryStatus @default(ACTIVE)
+  sortOrder     Int            @default(0)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  /// Restrict: a department cannot be deleted while it still has subcategories.
+  parent       Category?             @relation("CategoryTree", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  children     Category[]            @relation("CategoryTree")
+  products     Product[]
+  translations CategoryTranslation[]
+
+  @@index([parentId, status, sortOrder])
+  @@index([status, sortOrder])
+}
+
+model CategoryTranslation {
+  id          String  @id @default(cuid())
+  categoryId  String
+  /// Locale code from src/i18n/config.js ("ur", "hi"). English lives on Category itself.
+  locale      String  @db.VarChar(8)
+  name        String  @db.VarChar(120)
+  description String? @db.Text
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, locale])
+}
+
+model Product {
+  id               String        @id @default(cuid())
+  name             String        @db.VarChar(191)
+  slug             String        @unique @db.VarChar(191)
+  /// Style-level SKU (variants carry their own unique SKUs).
+  sku              String?       @unique @db.VarChar(64)
+  shortDescription String?       @db.VarChar(500)
+  description      String?       @db.Text
+  material         String?       @db.VarChar(191)
+  categoryId       String
+  gender           Gender        @default(UNISEX)
+  status           ProductStatus @default(DRAFT)
+  /// Regular price in PKR (canonical currency).
+  price            Decimal       @db.Decimal(12, 2)
+  /// Discounted price in PKR, used while `onSale` is true. Must be < price.
+  salePrice        Decimal?      @db.Decimal(12, 2)
+  /// Price actually charged (salePrice while on sale, else price). Denormalised so
+  /// price filters and price sorting are a single indexed column; kept in sync by productService.
+  effectivePrice   Decimal       @default(0) @db.Decimal(12, 2)
+  /// Denormalised total of variant stock, maintained by productService.
+  stock            Int           @default(0) @db.UnsignedInt
+  featured         Boolean       @default(false)
+  newArrival       Boolean       @default(false)
+  bestSeller       Boolean       @default(false)
+  onSale           Boolean       @default(false)
+  /// Optional search-engine overrides; pages fall back to name / shortDescription.
+  seoTitle         String?       @db.VarChar(70)
+  seoDescription   String?       @db.VarChar(170)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  /// Restrict: a category with products cannot be deleted by accident.
+  category      Category             @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  images        ProductImage[]
+  variants      ProductVariant[]
+  translations  ProductTranslation[]
+  cartItems     CartItem[]
+  wishlistItems WishlistItem[]
+  savedItems    SavedItem[]
+  orderItems    OrderItem[]
+
+  // Storefront queries always filter status = PUBLISHED first.
+  @@index([categoryId, status])
+  @@index([status, gender])
+  @@index([status, effectivePrice])
+  @@index([status, createdAt])
+  @@index([status, featured])
+  @@index([status, newArrival])
+  @@index([status, bestSeller])
+  @@index([status, onSale])
+}
+
+model ProductTranslation {
+  id               String  @id @default(cuid())
+  productId        String
+  locale           String  @db.VarChar(8)
+  name             String  @db.VarChar(191)
+  shortDescription String? @db.VarChar(500)
+  description      String? @db.Text
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, locale])
+}
+
+/// Cloudinary-hosted image: only the delivery URL and public id are stored — never credentials.
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  url       String   @db.VarChar(500)
+  publicId  String   @unique @db.VarChar(255)
+  alt       String?  @db.VarChar(191)
+  width     Int?     @db.UnsignedInt
+  height    Int?     @db.UnsignedInt
+  sortOrder Int      @default(0)
+  /// At most one per product — enforced transactionally by productService.setPrimaryImage.
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, sortOrder])
+}
+
+model ProductVariant {
+  id            String   @id @default(cuid())
+  productId     String
+  sku           String   @unique @db.VarChar(64)
+  /// NULL when size does not apply (perfume, watch…).
+  size          String?  @db.VarChar(20)
+  /// NULL when colour does not apply.
+  color         String?  @db.VarChar(40)
+  colorHex      String?  @db.Char(7)
+  /// Optional PKR price for this variant; falls back to the product price.
+  priceOverride Decimal? @db.Decimal(12, 2)
+  stock         Int      @default(0) @db.UnsignedInt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartItems  CartItem[]
+  savedItems SavedItem[]
+  orderItems OrderItem[]
+
+  // MySQL treats NULLs as distinct in unique indexes, so combinations with a
+  // NULL size/colour are additionally checked in productService.
+  @@unique([productId, size, color])
+  @@index([size])
+  @@index([color])
+  @@index([productId, stock])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Shopping: cart, wishlist, save-for-later (signed-in customers)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// One active cart per customer. Guest carts are client-side (later phase).
+model Cart {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CartItem[]
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  productId String
+  variantId String
+  /// CHECK (quantity > 0) in migration.
+  quantity  Int      @db.UnsignedInt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cart    Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, variantId])
+  @@index([productId])
+  @@index([variantId])
+}
+
+/// Favourites — product level ("products I like").
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([productId])
+}
+
+/// Save for later — variant level, moved out of the cart temporarily.
+model SavedItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  variantId String
+  /// CHECK (quantity > 0) in migration.
+  quantity  Int      @default(1) @db.UnsignedInt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, variantId])
+  @@index([productId])
+  @@index([variantId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Orders & payments
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Order {
+  id          String      @id @default(cuid())
+  /// Human-friendly reference shown to customers, e.g. 4B-20261002-7KQ2M.
+  orderNumber String      @unique @db.VarChar(32)
+  /// Nullable: guest orders, and history survives account deletion (SetNull).
+  userId      String?
+  status      OrderStatus @default(NEW)
+  currency    Currency    @default(PKR)
+
+  // Customer & delivery snapshot (never re-read from the profile)
+  customerName   String  @db.VarChar(160)
+  customerEmail  String  @db.VarChar(191)
+  customerPhone  String  @db.VarChar(32)
+  whatsappNumber String? @db.VarChar(32)
+  address        String  @db.VarChar(500)
+  city           String  @db.VarChar(100)
+  postalCode     String? @db.VarChar(20)
+  country        String  @default("Pakistan") @db.VarChar(60)
+
+  // Totals (CHECK ≥ 0 in migration)
+  subtotal    Decimal @db.Decimal(12, 2)
+  discount    Decimal @default(0) @db.Decimal(12, 2)
+  deliveryFee Decimal @default(0) @db.Decimal(12, 2)
+  total       Decimal @db.Decimal(12, 2)
+
+  /// Delivery option code chosen at checkout (see src/lib/shipping.js).
+  deliveryMethod       String  @default("STANDARD") @db.VarChar(40)
+  /// false when no delivery fee was configured: the fee is confirmed by the store afterwards.
+  deliveryFeeConfirmed Boolean @default(true)
+
+  /// Currency the customer was browsing in, and the PKR→display rate at that moment
+  /// (display only — the order is always charged in `currency`, i.e. PKR).
+  displayCurrency Currency @default(PKR)
+  exchangeRate    Decimal? @db.Decimal(18, 8)
+
+  /// Language the customer checked out in (en | ur | hi) — used for notifications.
+  locale String @default("en") @db.VarChar(8)
+
+  /// Client-generated key for one checkout attempt; repeated submissions return the same order.
+  idempotencyKey  String?   @unique @db.VarChar(64)
+  /// Set once reserved stock has been returned (cancellation / failed payment) — never twice.
+  stockReleasedAt DateTime?
+
+  customerNote String?  @db.Text
+  adminNote    String?  @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user          User?              @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  items         OrderItem[]
+  payment       Payment?
+  statusEvents  OrderStatusEvent[]
+  notifications Notification[]
+
+  @@index([userId, createdAt])
+  @@index([status, createdAt])
+  @@index([createdAt])
+  @@index([customerEmail])
+}
+
+/// Line snapshot: displays correctly even after the product is edited or deleted.
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  productId   String?
+  variantId   String?
+  productName String   @db.VarChar(191)
+  sku         String   @db.VarChar(64)
+  size        String?  @db.VarChar(20)
+  color       String?  @db.VarChar(40)
+  imageUrl    String?  @db.VarChar(500)
+  /// CHECK (quantity > 0) in migration.
+  quantity    Int      @db.UnsignedInt
+  unitPrice   Decimal  @db.Decimal(12, 2)
+  lineTotal   Decimal  @db.Decimal(12, 2)
+  createdAt   DateTime @default(now())
+
+  /// Restrict: order history cannot be removed by cascading from the order row.
+  order   Order           @relation(fields: [orderId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product Product?        @relation(fields: [productId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  variant ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([orderId])
+  @@index([productId])
+  @@index([variantId])
+}
+
+/// One primary payment record per order.
+/// Order status history (tracking timeline and admin audit trail).
+model OrderStatusEvent {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  /// CUSTOMER | ADMIN | SYSTEM
+  actor     String      @default("SYSTEM") @db.VarChar(16)
+  note      String?     @db.VarChar(500)
+  createdAt DateTime    @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([orderId, createdAt])
+}
+
+enum NotificationType {
+  ORDER_CONFIRMATION
+  ORDER_STATUS
+  PAYMENT_CONFIRMED
+  ADMIN_NEW_ORDER
+}
+
+enum NotificationAudience {
+  CUSTOMER
+  ADMIN
+}
+
+enum NotificationChannel {
+  WHATSAPP
+  EMAIL
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+  SKIPPED
+}
+
+/// One delivery attempt per channel for one logical event. `eventKey` identifies the
+/// event (e.g. ORDER_STATUS:<orderId>:SHIPPED:CUSTOMER); the unique (eventKey, channel)
+/// pair is the idempotency claim, so a repeated trigger can never send twice.
+model Notification {
+  id                String               @id @default(cuid())
+  orderId           String?
+  eventKey          String               @db.VarChar(191)
+  type              NotificationType
+  audience          NotificationAudience
+  channel           NotificationChannel
+  /// Phone digits or email address the message was (or would be) sent to.
+  recipient         String?              @db.VarChar(191)
+  status            NotificationStatus   @default(PENDING)
+  attempts          Int                  @default(0) @db.UnsignedInt
+  /// Provider id: WAAPI data.messageId or the SMTP Message-ID.
+  providerReference String?              @db.VarChar(191)
+  /// Set on the email row when it was sent because WhatsApp failed.
+  fallbackFrom      NotificationChannel?
+  errorMessage      String?              @db.VarChar(500)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  order Order? @relation(fields: [orderId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@unique([eventKey, channel])
+  @@index([orderId, createdAt])
+  @@index([status, createdAt])
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  orderId           String        @unique
+  method            PaymentMethod
+  status            PaymentStatus @default(PENDING)
+  amount            Decimal       @db.Decimal(12, 2)
+  currency          Currency      @default(PKR)
+  /// Provider transaction reference (e.g. PayNow) — unique per method.
+  providerReference String?       @db.VarChar(191)
+  /// Non-secret provider metadata (poll URLs, status payloads).
+  providerData      Json?
+  failureReason     String?       @db.VarChar(500)
+  paidAt            DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([method, providerReference])
+  @@index([status, createdAt])
+  @@index([method, status])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Admin settings (integration credentials, business contact, notification
+// preferences). A row exists only for a value the admin saved — anything else
+// falls back to the environment (see src/lib/settings). Credentials are stored
+// AES-256-GCM encrypted (ciphertext/iv/authTag); the key is never in the database.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum SettingCategory {
+  WHATSAPP
+  SMTP
+  BUSINESS
+  NOTIFICATIONS
+}
+
+enum SettingAuditAction {
+  SETTINGS_UPDATED
+  CREDENTIAL_REPLACED
+  CREDENTIAL_REMOVED
+  PREFERENCES_CHANGED
+  OVERRIDES_CLEARED
+  INTEGRATION_TESTED
+}
+
+model SystemSetting {
+  /// Dotted setting key, e.g. "smtp.host" (see src/lib/settings/definitions.js).
+  key         String          @id @db.VarChar(100)
+  category    SettingCategory
+  /// JSON-encoded non-secret value. NULL for credentials.
+  value       String?         @db.Text
+  /// Credentials only: AES-256-GCM ciphertext, 96-bit IV and auth tag (base64).
+  ciphertext  String?         @db.Text
+  iv          String?         @db.VarChar(32)
+  authTag     String?         @db.VarChar(32)
+  /// Fingerprint of the encryption key used (not the key) — detects a key change.
+  keyId       String?         @db.VarChar(16)
+  updatedById String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  updatedBy User? @relation(fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([category])
+  @@index([updatedById])
+}
+
+/// Who changed which settings when. Setting NAMES only — never values or secrets.
+model SettingAuditLog {
+  id        String             @id @default(cuid())
+  actorId   String?
+  category  SettingCategory
+  action    SettingAuditAction
+  /// Comma-separated setting keys affected.
+  keys      String?            @db.VarChar(500)
+  /// Integration tests: whether the test passed.
+  success   Boolean?
+  /// Safe, human-readable outcome (no secrets, no provider payloads).
+  outcome   String?            @db.VarChar(300)
+  createdAt DateTime           @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([category, action, createdAt])
+  @@index([createdAt])
+  @@index([actorId])
+}
